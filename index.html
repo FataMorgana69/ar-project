@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Example</title>
+    <title>AR Project</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- АР-сцена с использованием A-Frame -->
-    <a-scene embedded arjs>
-        <!-- Камера и элемент для включения AR -->
-        <a-entity camera></a-entity>
-        
-        <!-- Загружаем 3D модель из файла stol.gltf -->
-        <a-entity 
-            id="model"
-            gltf-model="url(models/stol.gltf)"
-            scale="0.5 0.5 0.5"
-            position="0 0 0">
-        </a-entity>
-    </a-scene>
+    <h1>Explore 3D Model in AR</h1>
 
-    <!-- Кнопка для включения WebXR -->
-    <button id="xr-button">Enter AR</button>
+    <!-- AR Scene -->
+    <div id="ar-container">
+        <!-- Scene with AR.js -->
+        <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
+            <!-- Add a 3D model in AR -->
+            <a-entity 
+                gltf-model="models/stol.gltf" 
+                scale="2 2 2" 
+                position="0 0 0" 
+                rotation="0 0 0">
+            </a-entity>
 
+            <!-- Camera for AR -->
+            <a-entity camera></a-entity>
+        </a-scene>
+    </div>
+
+    <!-- Load A-Frame and AR.js libraries -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
 </body>
 </html>
