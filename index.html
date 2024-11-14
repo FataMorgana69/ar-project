@@ -9,12 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
 
-    <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-    </style>
+    <!-- Подключаем внешний файл стилей -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Кнопка для активации AR -->
+    <button id="arButton">Enter AR</button>
+
+    <!-- Сообщение о поддержке AR (если не поддерживается) -->
+    <div id="arMessage">AR не поддерживается на этом устройстве</div>
+
     <a-scene embedded arjs>
         <!-- Камера и обработка жестов -->
         <a-camera position="0 0 0" rotation="0 0 0" gesture-handler></a-camera>
@@ -32,8 +36,18 @@
     <script>
         // Проверка поддержки WebXR
         if (!navigator.xr) {
-            alert("WebXR не поддерживается. Используйте AR.js.");
+            const arMessage = document.getElementById("arMessage");
+            arMessage.classList.add("visible");
         }
+
+        // Обработчик для кнопки
+        const arButton = document.getElementById("arButton");
+        const scene = document.querySelector("a-scene");
+
+        arButton.addEventListener("click", function() {
+            scene.enterVR();  // Вход в AR режим (если поддерживается)
+            arButton.style.display = "none";  // Скрытие кнопки после входа в AR
+        });
     </script>
 </body>
 </html>
