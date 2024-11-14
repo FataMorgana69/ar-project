@@ -1,37 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f3f3f3;
+    margin: 0;
+    overflow: hidden;
 }
 
-.container {
-    text-align: center;
-}
-
-.enter-ar-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.enter-ar-button:hover {
-    background-color: #45a049;
-}
-
-.error-message {
-    color: red;
-    font-size: 18px;
-    margin-top: 20px;
+canvas {
+    display: block;
 }
