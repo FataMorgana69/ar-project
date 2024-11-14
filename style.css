@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -14,6 +15,72 @@ h1 {
 }
 
 #ar-container {
+=======
+/* Основной стиль для страницы */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+/* Стиль сцены AR */
+a-scene {
+>>>>>>> b9fe9bd72db00abafafe62098d57abab8c9155e9
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Стиль кнопки WebXR */
+#xr-button {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 40px;
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Эффект при наведении */
+#xr-button:hover {
+    background: linear-gradient(45deg, #00c6ff, #007bff);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Эффект при нажатии */
+#xr-button:active {
+    transform: scale(0.98);
+}
+
+/* Анимация */
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Применяем анимацию к кнопке */
+#xr-button {
+    animation: buttonPulse 1.5s infinite ease-in-out;
 }
