@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Model Viewer</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-    <div class="container">
-        <button id="enter-ar" class="enter-ar-button">Enter AR</button>
-        <div id="error-message" class="error-message"></div>
-    </div>
+    <title>AR Demo</title>
+    <!-- Подключаем A-Frame для создания AR -->
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
-    <script type="module" src="main.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
 
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <a-scene embedded arjs>
+        <!-- Камера и обработка жестов -->
+        <a-camera position="0 0 0" rotation="0 0 0" gesture-handler></a-camera>
+
+        <!-- 3D модель (стол) -->
+        <a-entity 
+            gltf-model="url(models/stol.gltf)" 
+            scale="0.5 0.5 0.5"
+            position="0 0 -5"
+            rotation="0 180 0"
+            gesture-handler>
+        </a-entity>
+    </a-scene>
+
+    <script>
+        // Проверка поддержки WebXR
+        if (!navigator.xr) {
+            alert("WebXR не поддерживается. Используйте AR.js.");
+        }
+    </script>
+</body>
 </html>
