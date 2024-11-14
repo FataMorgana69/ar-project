@@ -1,0 +1,69 @@
+/* Общие стили для body */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Заголовок */
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Контейнер для сцены и кнопок */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Стиль для кнопки AR */
+button {
+    padding: 15px 30px;
+    background-color: #008CBA; /* синий цвет */
+    color: white;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005f72; /* темный синий при наведении */
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Контейнер для AR-контента */
+#scene-container {
+    width: 100%;
+    height: 400px; /* можно изменить в зависимости от потребностей */
+    background-color: #e0e0e0; /* светлый фон для области AR */
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Стиль для фона и общих отступов */
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
