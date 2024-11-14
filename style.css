@@ -1,8 +1,61 @@
+/* Сброс отступов и установка фона */
 body {
     margin: 0;
+    padding: 0;
     overflow: hidden;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
 }
 
-canvas {
-    display: block;
+/* Стили для кнопки активации AR */
+#arButton {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    z-index: 10;
+    font-weight: bold;
+}
+
+#arButton:hover {
+    background-color: #0056b3;
+    transform: translateX(-50%) scale(1.05);
+}
+
+#arButton:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+/* Текст над кнопкой */
+#arMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/* Стиль для скрытого сообщения */
+#arMessage.visible {
+    opacity: 1;
+}
+
+/* Стиль для AR-сцены */
+a-scene {
+    width: 100%;
+    height: 100vh;
 }
