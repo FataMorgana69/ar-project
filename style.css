@@ -1,61 +1,67 @@
-/* Сброс отступов и установка фона */
+/* Основной стиль для страницы */
 body {
     margin: 0;
     padding: 0;
+    background-color: #f0f0f0;
     overflow: hidden;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
 }
 
-/* Стили для кнопки активации AR */
-#arButton {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #007bff;
-    color: white;
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    z-index: 10;
-    font-weight: bold;
-}
-
-#arButton:hover {
-    background-color: #0056b3;
-    transform: translateX(-50%) scale(1.05);
-}
-
-#arButton:active {
-    transform: translateX(-50%) scale(0.95);
-}
-
-/* Текст над кнопкой */
-#arMessage {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    color: #333;
-    font-weight: bold;
-    z-index: 5;
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-/* Стиль для скрытого сообщения */
-#arMessage.visible {
-    opacity: 1;
-}
-
-/* Стиль для AR-сцены */
+/* Стиль сцены AR */
 a-scene {
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Стиль кнопки WebXR */
+#xr-button {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 40px;
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Эффект при наведении */
+#xr-button:hover {
+    background: linear-gradient(45deg, #00c6ff, #007bff);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Эффект при нажатии */
+#xr-button:active {
+    transform: scale(0.98);
+}
+
+/* Анимация */
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Применяем анимацию к кнопке */
+#xr-button {
+    animation: buttonPulse 1.5s infinite ease-in-out;
 }
