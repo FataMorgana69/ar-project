@@ -8,7 +8,7 @@ sceneEl.style.left = '0';
 sceneEl.style.width = '100%';
 sceneEl.style.height = '100vh';
 
-// Камера и сцена AR
+// Камера для AR
 let cameraEl = document.createElement('a-camera');
 cameraEl.setAttribute('position', '0 1.6 0'); // Позиция камеры
 sceneEl.appendChild(cameraEl);
