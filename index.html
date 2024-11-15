@@ -1,148 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D AR Viewer</title>
-  
-  <!-- A-Frame library -->
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  
-  <!-- AR.js for AR functionality (fallback for WebXR) -->
-  <script src="https://cdn.jsdelivr.net/npm/ar.js@3.0.0/aframe/build/aframe-ar.js"></script>
-  
-  <!-- Gesture Handler library for touch controls -->
-  <script src="https://cdn.jsdelivr.net/npm/aframe-gesture-handler-component@5.0.0/aframe-gesture-handler.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f7f7f7;
-      font-family: Arial, sans-serif;
-      color: #333;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    #enter-ar-button {
-      padding: 15px 30px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 20px;
-      display: block;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    #enter-ar-button:hover {
-      background-color: #45a049;
-    }
-
-    #arScene {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: none;
-    }
-
-    .crosshair {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
-      border: 3px solid #fff;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.3);
-      z-index: 10;
-    }
-
-    .description {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 18px;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR with ARKit & ARCore</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js"></script>
 </head>
 <body>
-  <h1>Explore 3D Models in AR</h1>
-  
-  <!-- Enter AR Button -->
-  <button id="enter-ar-button">Enter AR</button>
+    <h1>Explore 3D Model in AR</h1>
+    <button id="enterARBtn">Enter AR</button>
 
-  <!-- A-Frame AR Scene -->
-  <a-scene id="arScene" embedded arjs>
-    <!-- Camera -->
-    <a-camera gps-camera rotation-reader></a-camera>
+    <!-- AR Scene -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <!-- 3D model of the product -->
+        <a-entity id="productModel" gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 0 0">
+        </a-entity>
 
-    <!-- AR Model (Your 3D object) -->
-    <a-entity id="model" gltf-model="models/stol.gltf" scale="0.1 0.1 0.1" position="0 0 0" gesture-handler></a-entity>
+        <!-- AR camera -->
+        <a-camera></a-camera>
+    </a-scene>
 
-    <!-- Plane where model will be placed -->
-    <a-plane position="0 0 -2" rotation="-90 0 0" width="5" height="5" color="#7BC8A4" opacity="0.5"></a-plane>
-
-    <!-- Crosshair for pointing the placement of the model -->
-    <div class="crosshair"></div>
-
-    <!-- Description of AR model -->
-    <div class="description">Tap on the screen to place the model!</div>
-  </a-scene>
-
-  <script>
-    // Check if WebXR is supported
-    if (navigator.xr) {
-      // WebXR supported
-      document.getElementById('enter-ar-button').addEventListener('click', function () {
-        const scene = document.querySelector('a-scene');
-        scene.enterXR();
-        document.getElementById('arScene').style.display = 'block'; // Show AR Scene
-      });
-    } else {
-      // WebXR not supported, fallback to AR.js
-      document.getElementById('enter-ar-button').addEventListener('click', function () {
-        const scene = document.querySelector('a-scene');
-        scene.enterVR();  // Starts AR session with AR.js
-        document.getElementById('arScene').style.display = 'block'; // Show AR Scene
-      });
-    }
-
-    // For moving the model based on touch
-    document.querySelector('#arScene').addEventListener('click', function(event) {
-      // Get the touch position
-      const touchPosition = event.detail.intersection;
-
-      // If the position is valid, update model position
-      if (touchPosition) {
-        const model = document.querySelector('#model');
-        model.setAttribute('position', touchPosition);
-      }
-    });
-  </script>
+    <script src="app.js"></script>
 </body>
 </html>
