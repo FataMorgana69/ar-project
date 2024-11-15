@@ -27,6 +27,7 @@ h1 {
   cursor: pointer;
   margin-top: 20px;
   border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .ar-button:hover {

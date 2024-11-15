@@ -72,6 +72,7 @@ function startARJS() {
   ground.setAttribute('width', '5');
   ground.setAttribute('height', '5');
   ground.setAttribute('color', '#ccc');
+  ground.setAttribute('opacity', '0.5'); // Сделаем плоскость полупрозрачной
 
   arScene.appendChild(ground);
 
@@ -80,6 +81,7 @@ function startARJS() {
   model.setAttribute('gltf-model', 'models/stol.gltf'); // Путь к 3D модели
   model.setAttribute('scale', '0.1 0.1 0.1'); // Устанавливаем фиксированный масштаб
   model.setAttribute('position', '0 0 0'); // Устанавливаем позицию модели на плоскости
+  model.setAttribute('animation', 'property: rotation; to: 0 360 0; dur: 10000; loop: true'); // Крутим модель
 
   arScene.appendChild(model);
 
