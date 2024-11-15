@@ -4,18 +4,90 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D AR Viewer</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe/dist/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
+  
+  <!-- A-Frame library -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  
+  <!-- AR.js for AR functionality (fallback for WebXR) -->
+  <script src="https://cdn.jsdelivr.net/npm/ar.js@3.0.0/aframe/build/aframe-ar.js"></script>
+  
+  <!-- Gesture Handler library for touch controls -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-gesture-handler-component@5.0.0/aframe-gesture-handler.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    #enter-ar-button {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    #arScene {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
+  <!-- Enter AR Button -->
+  <button id="enter-ar-button">Enter AR</button>
 
-  <div class="content">
-    <h1>Explore 3D Model in AR</h1>
-    <button id="enter-ar-button" class="ar-button">Enter AR</button>
-  </div>
+  <!-- A-Frame AR Scene -->
+  <a-scene id="arScene" embedded arjs>
+    <!-- Camera -->
+    <a-camera gps-camera rotation-reader></a-camera>
 
-  <script src="app.js"></script>
+    <!-- AR Model (Your 3D object) -->
+    <a-entity id="model" gltf-model="models/stol.gltf" scale="0.1 0.1 0.1" position="0 0 0" gesture-handler></a-entity>
+
+    <!-- Plane where model will be placed -->
+    <a-plane position="0 0 -2" rotation="-90 0 0" width="5" height="5" color="#7BC8A4" opacity="0.5"></a-plane>
+
+    <!-- Crosshair for pointing the placement of the model -->
+    <div class="crosshair"></div>
+  </a-scene>
+
+  <script>
+    // Check for WebXR support
+    if (navigator.xr) {
+      // WebXR supported
+      document.getElementById('enter-ar-button').addEventListener('click', function () {
+        const scene = document.querySelector('a-scene');
+        scene.enterXR();
+      });
+    } else {
+      // WebXR not supported, fallback to AR.js
+      document.getElementById('enter-ar-button').addEventListener('click', function () {
+        const scene = document.querySelector('a-scene');
+        scene.enterVR();  // Starts AR session with AR.js
+      });
+    }
+  </script>
 </body>
 </html>
