@@ -1,12 +1,12 @@
 document.getElementById('enter-ar').addEventListener('click', function() {
-    // Включение AR сцены
+    // Включение AR-сцены при нажатии на кнопку
     const scene = document.querySelector('a-scene');
-    scene.enterVR(); // Это метод A-Frame для старта AR
+    scene.enterVR(); // Вход в режим AR
 });
 
 const modelEntity = document.querySelector('#model');
 
-// Функция для обработки изменений положения модели
+// Обработка перемещения модели через сенсорные жесты
 let isMoving = false;
 let touchStart = { x: 0, y: 0 };
 
@@ -21,7 +21,7 @@ modelEntity.addEventListener('touchmove', (event) => {
         const dx = touchMove.x - touchStart.x;
         const dy = touchMove.y - touchStart.y;
 
-        // Перемещаем модель
+        // Перемещение модели на экран
         modelEntity.object3D.position.x += dx * 0.01;
         modelEntity.object3D.position.y -= dy * 0.01;
 
