@@ -18,43 +18,81 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #f0f0f0;
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
     #enter-ar-button {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
+      padding: 15px 30px;
       background-color: #4CAF50;
       color: white;
       font-size: 18px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      z-index: 10;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
+
+    #enter-ar-button:hover {
+      background-color: #45a049;
+    }
+
     #arScene {
       width: 100%;
       height: 100%;
       position: absolute;
       top: 0;
       left: 0;
+      display: none;
     }
+
     .crosshair {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 30px;
-      height: 30px;
-      border: 2px solid #fff;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #fff;
       border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
       z-index: 10;
     }
+
+    .description {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
+  <h1>Explore 3D Models in AR</h1>
+  
   <!-- Enter AR Button -->
   <button id="enter-ar-button">Enter AR</button>
 
@@ -71,23 +109,40 @@
 
     <!-- Crosshair for pointing the placement of the model -->
     <div class="crosshair"></div>
+
+    <!-- Description of AR model -->
+    <div class="description">Tap on the screen to place the model!</div>
   </a-scene>
 
   <script>
-    // Check for WebXR support
+    // Check if WebXR is supported
     if (navigator.xr) {
       // WebXR supported
       document.getElementById('enter-ar-button').addEventListener('click', function () {
         const scene = document.querySelector('a-scene');
         scene.enterXR();
+        document.getElementById('arScene').style.display = 'block'; // Show AR Scene
       });
     } else {
       // WebXR not supported, fallback to AR.js
       document.getElementById('enter-ar-button').addEventListener('click', function () {
         const scene = document.querySelector('a-scene');
         scene.enterVR();  // Starts AR session with AR.js
+        document.getElementById('arScene').style.display = 'block'; // Show AR Scene
       });
     }
+
+    // For moving the model based on touch
+    document.querySelector('#arScene').addEventListener('click', function(event) {
+      // Get the touch position
+      const touchPosition = event.detail.intersection;
+
+      // If the position is valid, update model position
+      if (touchPosition) {
+        const model = document.querySelector('#model');
+        model.setAttribute('position', touchPosition);
+      }
+    });
   </script>
 </body>
 </html>
