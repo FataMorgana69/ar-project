@@ -3,38 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D AR Model</title>
+    <title>AR with Plane Detection</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-
-    <!-- Сообщение об ошибке AR -->
-    <div id="ar-error-message" style="display: none; padding: 1em; background: #ffdddd; color: #900; text-align: center;">
-        К сожалению, ваше устройство не поддерживает AR.
+<body>
+    <div id="ar-interface">
+        <h1>Explore 3D Model in AR</h1>
+        <button id="enter-ar-button">Enter AR</button>
     </div>
 
-    <!-- AR-сцена -->
-    <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam;">
-        <!-- Модель с возможностью управления жестами -->
-        <a-entity 
-            gltf-model="url(models/stol.gltf)" 
-            scale="0.5 0.5 0.5" 
-            position="0 0 0" 
-            rotation="0 180 0" 
-            gesture-handler 
-            animation-mixer>
-        </a-entity>
-        <a-camera-static></a-camera-static>
-    </a-scene>
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.module.js';
+        import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.140.0/examples/jsm/webxr/ARButton.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.140.0/examples/jsm/loaders/GLTFLoader.js';
 
-    <script>
-        // Проверка поддержки AR на устройстве
-        if (!AFRAME.utils.device.isMobile() || !navigator.xr) {
-            document.getElementById('ar-error-message').style.display = 'block';
+        let container;
+        let camera, scene, renderer;
+        let controller;
+        let reticle;
+        let model;
+
+        init();
+        animate();
+
+        function init() {
+            container = document.createElement('div');
+            document.body.appendChild(container);
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.xr.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Добавляем AR-кнопку для входа в AR-режим
+            document.getElementById('enter-ar-button').addEventListener('click', () => {
+                document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] }));
+            });
+
+            controller = renderer.xr.getController(0);
+            controller.addEventListener('select', onSelect);
+            scene.add(controller);
+
+            // Загрузка модели
+            const loader = new GLTFLoader();
+            loader.load('models/stol.gltf', function (gltf) {
+                model = gltf.scene;
+                model.scale.set(0.5, 0.5, 0.5);
+            });
+
+            const geometry = new THREE.RingGeometry(0.07, 0.09, 32).rotateX(-Math.PI / 2);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            reticle = new THREE.Mesh(geometry, material);
+            reticle.matrixAutoUpdate = false;
+            reticle.visible = false;
+            scene.add(reticle);
+
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onSelect() {
+            if (reticle.visible && model) {
+                const clone = model.clone();
+                clone.position.setFromMatrixPosition(reticle.matrix);
+                scene.add(clone);
+            }
+        }
+
+        function animate() {
+            renderer.setAnimationLoop(render);
+        }
+
+        function render(timestamp, frame) {
+            if (frame) {
+                const referenceSpace = renderer.xr.getReferenceSpace();
+                const session = renderer.xr.getSession();
+
+                const viewerPose = frame.getViewerPose(referenceSpace);
+                if (viewerPose) {
+                    const hitTestResults = frame.getHitTestResults(controller);
+
+                    if (hitTestResults.length > 0) {
+                        const hit = hitTestResults[0];
+                        const referenceSpace = renderer.xr.getReferenceSpace();
+                        const pose = hit.getPose(referenceSpace);
+
+                        reticle.visible = true;
+                        reticle.matrix.fromArray(pose.transform.matrix);
+                    } else {
+                        reticle.visible = false;
+                    }
+                }
+            }
+
+            renderer.render(scene, camera);
         }
     </script>
 </body>

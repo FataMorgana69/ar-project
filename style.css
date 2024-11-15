@@ -1,19 +1,47 @@
+/* Стили для улучшения внешнего вида */
 body {
     margin: 0;
-    overflow: hidden;
+    padding: 0;
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f5f5f5;
+    background-color: #f0f0f0;
+    color: #333;
+    overflow: hidden;
 }
 
-#ar-error-message {
-    position: fixed;
-    top: 10px;
+/* Центрирование кнопки и текста */
+#ar-interface {
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 400px;
-    z-index: 1000;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+/* Стилизация кнопки */
+#enter-ar-button {
+    background-color: #ff6f00;
+    color: white;
+    font-size: 16px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#enter-ar-button:hover {
+    background-color: #ff8f1a;
+}
+
+/* Стили для текста */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+canvas {
+    display: block;
 }
