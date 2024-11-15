@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR 3D Model Viewer</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D AR Viewer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@webxr-input-profiles/motion-controllers@1.0.1/dist/three.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
-    <button id="enter-ar-button" class="ar-button">Enter AR</button>
 
-    <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js@1.0.0/aframe-ar.js"></script>
-    <script src="app.js"></script>
+  <div class="content">
+    <h1>Explore 3D Model in AR</h1>
+    <button id="enter-ar-button" class="ar-button">Enter AR</button>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
