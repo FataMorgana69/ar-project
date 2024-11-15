@@ -1,76 +1,79 @@
-// Функция для запуска AR с WebXR
-function startWebXR() {
-  if (navigator.xr) {
-    const enterARButton = document.getElementById('enter-ar-button');
-    enterARButton.style.display = 'block';
+let sceneEl = document.createElement('a-scene');
+sceneEl.setAttribute('embedded', true);
+sceneEl.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
 
-    enterARButton.addEventListener('click', function () {
-      // Пытаемся войти в AR режим через WebXR
-      navigator.xr.requestSession('immersive-ar', {
-        requiredFeatures: ['hit-test']
-      }).then(onSessionStarted).catch((err) => {
-        console.error("AR Session failed", err);
-        // В случае ошибки запускаем AR.js
-        startARJS();
-      });
+// Камера и сцена AR
+let cameraEl = document.createElement('a-camera');
+cameraEl.setAttribute('position', '0 1.6 0'); // Позиция камеры
+sceneEl.appendChild(cameraEl);
+
+// Добавляем кнопку для активации AR
+const enterARButton = document.getElementById('enter-ar-button');
+
+// Проверка на поддержку WebXR
+if (navigator.xr) {
+  enterARButton.style.display = 'block';
+  enterARButton.addEventListener('click', () => {
+    navigator.xr.requestSession('immersive-ar', {
+      requiredFeatures: ['hit-test']
+    }).then(onSessionStarted).catch((err) => {
+      console.error("AR Session failed", err);
+      // Запуск AR.js, если WebXR не поддерживается
+      startARJS();
     });
+  });
+} else {
+  startARJS();
+}
 
-    function onSessionStarted(session) {
-      const canvas = document.createElement('canvas');
-      document.body.appendChild(canvas);
+// Функция для работы с WebXR
+function onSessionStarted(session) {
+  const canvas = document.createElement('canvas');
+  document.body.appendChild(canvas);
 
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas });
-      renderer.xr.enabled = true;
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+  renderer.xr.enabled = true;
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-      camera.position.set(0, 1, 2);  // Устанавливаем камеру на фиксированном расстоянии от модели
-      scene.add(camera);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+  camera.position.set(0, 1.6, 2);  // Позиция камеры
 
-      const controller = renderer.xr.getController(0);
-      scene.add(controller);
+  scene.add(camera);
 
-      session.requestAnimationFrame(animate);
+  session.requestAnimationFrame(animate);
 
-      function animate() {
-        renderer.render(scene, camera);
-        session.requestAnimationFrame(animate);
-      }
-
-      function onSessionEnded() {
-        document.body.removeChild(canvas);
-        enterARButton.style.display = 'block';
-      }
-    }
-  } else {
-    startARJS();
+  function animate() {
+    renderer.render(scene, camera);
+    session.requestAnimationFrame(animate);
   }
 }
 
-// Функция для запуска AR с AR.js
+// Функция для запуска AR.js без маркера
 function startARJS() {
   const arScene = document.createElement('a-scene');
   arScene.setAttribute('embedded', true);
   arScene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
 
-  const marker = document.createElement('a-marker');
-  marker.setAttribute('preset', 'hiro'); // Вы можете выбрать другие маркеры
-  marker.setAttribute('id', 'ar-marker');
+  // Добавляем плоскость
+  const ground = document.createElement('a-plane');
+  ground.setAttribute('position', '0 0 -2');
+  ground.setAttribute('rotation', '-90 0 0');
+  ground.setAttribute('width', '5');
+  ground.setAttribute('height', '5');
+  ground.setAttribute('color', '#ccc');
 
-  // Создаем 3D модель с путем к файлу stol.gltf
+  arScene.appendChild(ground);
+
+  // Создаем 3D модель и позиционируем ее на плоскости
   const model = document.createElement('a-entity');
-  model.setAttribute('gltf-model', 'models/stol.gltf');  // Путь к файлу модели
-  model.setAttribute('scale', '0.1 0.1 0.1'); // Установим фиксированный масштаб
-  model.setAttribute('position', '0 0 0'); // Позиция модели
+  model.setAttribute('gltf-model', 'models/stol.gltf'); // Путь к 3D модели
+  model.setAttribute('scale', '0.1 0.1 0.1'); // Устанавливаем фиксированный масштаб
+  model.setAttribute('position', '0 0 0'); // Устанавливаем позицию модели на плоскости
 
-  marker.appendChild(model);
-  arScene.appendChild(marker);
+  arScene.appendChild(model);
 
   const button = document.getElementById('enter-ar-button');
-  button.style.display = 'none'; // Скрываем кнопку
+  button.style.display = 'none'; // Скрываем кнопку после начала AR
 
   document.body.appendChild(arScene);
 }
-
-// Инициализация
-startWebXR();
