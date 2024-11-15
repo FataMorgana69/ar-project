@@ -24,7 +24,7 @@ function startWebXR() {
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-      camera.position.set(0, 0, 1);  // Устанавливаем камеру на фиксированном расстоянии от модели
+      camera.position.set(0, 1, 2);  // Устанавливаем камеру на фиксированном расстоянии от модели
       scene.add(camera);
 
       const controller = renderer.xr.getController(0);
