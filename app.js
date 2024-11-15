@@ -2,6 +2,12 @@ let sceneEl = document.createElement('a-scene');
 sceneEl.setAttribute('embedded', true);
 sceneEl.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
 
+sceneEl.style.position = 'absolute';
+sceneEl.style.top = '0';
+sceneEl.style.left = '0';
+sceneEl.style.width = '100%';
+sceneEl.style.height = '100vh';
+
 // Камера и сцена AR
 let cameraEl = document.createElement('a-camera');
 cameraEl.setAttribute('position', '0 1.6 0'); // Позиция камеры
@@ -37,7 +43,6 @@ function onSessionStarted(session) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
   camera.position.set(0, 1.6, 2);  // Позиция камеры
-
   scene.add(camera);
 
   session.requestAnimationFrame(animate);
@@ -53,6 +58,12 @@ function startARJS() {
   const arScene = document.createElement('a-scene');
   arScene.setAttribute('embedded', true);
   arScene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+
+  arScene.style.position = 'absolute';
+  arScene.style.top = '0';
+  arScene.style.left = '0';
+  arScene.style.width = '100%';
+  arScene.style.height = '100vh';
 
   // Добавляем плоскость
   const ground = document.createElement('a-plane');
