@@ -5,28 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D AR Model</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.3.2/aframe/build/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.3.2/aframe/build/aframe-ar.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Explore 3D Model in AR</h1>
-        <button id="ar-button">Enter AR</button>
-
-        <a-scene embedded arjs>
-            <!-- 3D Model (without marker) -->
-            <a-entity gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 180 0"></a-entity>
-        </a-scene>
-    </div>
-
-    <script>
-        const arButton = document.getElementById('ar-button');
-
-        arButton.addEventListener('click', () => {
-            // Добавление модели в AR сцену
-            document.querySelector('a-scene').setAttribute('arjs', 'sourceType: webcam;');
-        });
-    </script>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam;">
+        <!-- 3D Model (без маркера, с позиционированием) -->
+        <a-entity gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 180 0"></a-entity>
+        <a-camera-static></a-camera-static>
+    </a-scene>
 </body>
 </html>
