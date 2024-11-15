@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR with ARKit & ARCore</title>
+    <title>AR Shopping Experience</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-ar.js"></script> <!-- Для AR -->
+    <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@0.10.0/dist/webxr-polyfill.min.js"></script> <!-- Для поддержки WebXR -->
 </head>
 <body>
-    <h1>Explore 3D Model in AR</h1>
-    <button id="enterARBtn">Enter AR</button>
+    <div class="header">
+        <h1>Explore Our Product in AR</h1>
+        <button id="enterARBtn">Enter AR</button>
+    </div>
 
-    <!-- AR Scene -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <!-- 3D model of the product -->
-        <a-entity id="productModel" gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 0 0">
-        </a-entity>
+    <!-- A-Frame AR сцена -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+        <!-- 3D модель товара -->
+        <a-entity id="productModel" gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
 
-        <!-- AR camera -->
+        <!-- Камера -->
         <a-camera></a-camera>
     </a-scene>
 

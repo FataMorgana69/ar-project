@@ -3,7 +3,7 @@ document.getElementById('enterARBtn').addEventListener('click', function () {
     const arButton = document.querySelector('#enterARBtn');
 
     if (scene) {
-        scene.enterAR();
-        arButton.style.display = 'none';  // Скрываем кнопку после активации AR
+        scene.enterAR(); // Входим в AR
+        arButton.style.display = 'none'; // Скрываем кнопку после активации AR
     }
 });
