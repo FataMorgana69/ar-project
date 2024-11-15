@@ -23,7 +23,8 @@ function startWebXR() {
       renderer.xr.enabled = true;
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera();
+      const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+      camera.position.set(0, 0, 1);  // Устанавливаем камеру на фиксированном расстоянии от модели
       scene.add(camera);
 
       const controller = renderer.xr.getController(0);
@@ -59,7 +60,7 @@ function startARJS() {
   // Создаем 3D модель с путем к файлу stol.gltf
   const model = document.createElement('a-entity');
   model.setAttribute('gltf-model', 'models/stol.gltf');  // Путь к файлу модели
-  model.setAttribute('scale', '0.1 0.1 0.1'); // Убедитесь, что масштаб подходящий
+  model.setAttribute('scale', '0.1 0.1 0.1'); // Установим фиксированный масштаб
   model.setAttribute('position', '0 0 0'); // Позиция модели
 
   marker.appendChild(model);
