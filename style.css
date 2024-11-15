@@ -1,47 +1,43 @@
-/* Стили для улучшения внешнего вида */
+/* Сбросим стили для body */
 body {
     margin: 0;
-    padding: 0;
+    overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    color: #333;
-    overflow: hidden;
 }
 
-/* Центрирование кнопки и текста */
-#ar-interface {
+/* Сделаем кнопку красивой и заметной */
+button {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 10;
-}
-
-/* Стилизация кнопки */
-#enter-ar-button {
-    background-color: #ff6f00;
-    color: white;
-    font-size: 16px;
+    top: 20px;
+    left: 20px;
     padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 }
 
-#enter-ar-button:hover {
-    background-color: #ff8f1a;
+/* Стили для кнопки при наведении */
+button:hover {
+    background-color: #45a049;
 }
 
-/* Стили для текста */
-h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-}
-
+/* Стили для канваса, чтобы он занимал всю ширину экрана */
 canvas {
     display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Заголовок или текст, если он будет */
+h1 {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 2rem;
+    color: #333;
 }
