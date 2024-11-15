@@ -8,12 +8,10 @@
 </head>
 <body>
     <div class="container">
-        <!-- Кнопка для запуска AR -->
         <button id="enter-ar">Enter AR</button>
     </div>
 
-    <!-- AR-сцена -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;" vr-mode-ui="enabled: false">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
         <!-- Модель 3D -->
         <a-entity id="model" position="0 0 0" gltf-model="models/stol.gltf" scale="1 1 1" rotation="0 0 0" class="ar-object"></a-entity>
 

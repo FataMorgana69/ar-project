@@ -1,21 +1,21 @@
-// Получаем кнопку для запуска AR
+// Функция для запуска AR
 document.getElementById('enter-ar').addEventListener('click', function() {
     const scene = document.querySelector('a-scene');
     
-    // Проверим, поддерживает ли устройство AR
+    // Проверим поддержку WebXR
     if (navigator.xr && navigator.xr.isSessionSupported) {
         navigator.xr.isSessionSupported('immersive-ar').then(function(supported) {
             if (supported) {
-                // Если поддержка AR есть, активируем AR-сцену
+                // Если поддержка есть, запускаем AR
                 scene.enterVR();
             } else {
-                alert("AR не поддерживается на этом устройстве.");
+                alert("AR не поддерживается на вашем устройстве.");
             }
         }).catch(function(error) {
             console.error("Ошибка при проверке поддержки AR:", error);
             alert("Ошибка при проверке AR.");
         });
     } else {
-        alert("AR не поддерживается на этом устройстве.");
+        alert("AR не поддерживается на вашем устройстве.");
     }
 });
