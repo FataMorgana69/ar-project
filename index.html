@@ -7,12 +7,35 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
+
+    <!-- Сообщение об ошибке AR -->
+    <div id="ar-error-message" style="display: none; padding: 1em; background: #ffdddd; color: #900; text-align: center;">
+        К сожалению, ваше устройство не поддерживает AR.
+    </div>
+
+    <!-- AR-сцена -->
     <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam;">
-        <!-- 3D Model (без маркера, с позиционированием) -->
-        <a-entity gltf-model="url(models/stol.gltf)" scale="0.5 0.5 0.5" position="0 0 0" rotation="0 180 0"></a-entity>
+        <!-- Модель с возможностью управления жестами -->
+        <a-entity 
+            gltf-model="url(models/stol.gltf)" 
+            scale="0.5 0.5 0.5" 
+            position="0 0 0" 
+            rotation="0 180 0" 
+            gesture-handler 
+            animation-mixer>
+        </a-entity>
         <a-camera-static></a-camera-static>
     </a-scene>
+
+    <script>
+        // Проверка поддержки AR на устройстве
+        if (!AFRAME.utils.device.isMobile() || !navigator.xr) {
+            document.getElementById('ar-error-message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
