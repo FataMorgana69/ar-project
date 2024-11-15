@@ -4,9 +4,9 @@ document.getElementById('enter-ar').addEventListener('click', function() {
     scene.enterVR(); // Вход в режим AR
 });
 
+// Даем возможность перемещать модель
 const modelEntity = document.querySelector('#model');
 
-// Обработка перемещения модели через сенсорные жесты
 let isMoving = false;
 let touchStart = { x: 0, y: 0 };
 
@@ -21,7 +21,7 @@ modelEntity.addEventListener('touchmove', (event) => {
         const dx = touchMove.x - touchStart.x;
         const dy = touchMove.y - touchStart.y;
 
-        // Перемещение модели на экран
+        // Перемещаем модель
         modelEntity.object3D.position.x += dx * 0.01;
         modelEntity.object3D.position.y -= dy * 0.01;
 
